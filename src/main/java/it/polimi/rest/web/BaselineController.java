@@ -23,7 +23,7 @@ public class BaselineController {
 	@Autowired
 	BaselineService baselineService;
 
-	/*
+	/* Used in smartg20 app
 	 * Return a double, avg of baseline of last year
 	 */
 	@PostMapping("/lastYear")
@@ -38,7 +38,12 @@ public class BaselineController {
 		return baselineService.getMyLastYearBaseline(wrapperRequest);
 	}
 	
-	@PostMapping("/district")
+	/*
+	 * used in smarth2o app
+	 * returns total consumption of specified district's smart meter in a period of time
+	 * 
+	 */
+	@PostMapping("/myNeighborhood")
 	public Double postDistrictBaseline(@RequestBody final Wrapper wrapperRequest) throws ResourceNotFoundException, InvalidDateException {
 		
 		if (wrapperRequest.getStartDate() ==null)  throw new ResourceNotFoundException("startDate");

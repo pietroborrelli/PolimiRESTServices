@@ -33,14 +33,16 @@ class RegisterController {
 	
 	@Autowired
 	RegisterByDistrictService registerByDistrictService;
-
-	
 	
 	@GetMapping("/hello")
 	public String hello() {
 		return "index";
 	}
-
+	/*
+	 * used in smarth2o app
+	 * returns raw registers of specified smart meter in a period of time
+	 * 
+	 */
 	@PostMapping("/list")
 	public List<Register> postList(@RequestBody final Wrapper wrapperRequest) throws ResourceNotFoundException, InvalidDateException {
 		
@@ -51,6 +53,7 @@ class RegisterController {
 		if (wrapperRequest.getStartDate().after(wrapperRequest.getEndDate())) throw new InvalidDateException();
 		return registerService.getRegisterList(wrapperRequest);
 	}
+	
 
 	@PostMapping("/summary")
 	public SummaryConsumption postSummaryNoDataRestriction(@RequestBody final Wrapper wrapperRequest) throws ResourceNotFoundException, InvalidDateException {

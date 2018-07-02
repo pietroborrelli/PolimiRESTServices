@@ -12,6 +12,7 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import it.polimi.rest.domain.RegisterByDistrict;
 import it.polimi.rest.domain.request.Wrapper;
 import it.polimi.rest.domain.response.SummaryConsumption;
 import it.polimi.rest.exception.ResourceNotFoundException;
@@ -241,6 +242,32 @@ public class RegisterByDistrictServiceImp implements RegisterByDistrictService{
 						);
 		}
 		return incrementalConsumption;
+	}
+
+	@Override
+	public Double getAvgNeighborhoodConsumption(Wrapper wrapperRequest) throws ResourceNotFoundException {
+		Double avg = 0.0;
+		
+		//AVG DAYS
+				if (wrapperRequest.getStartDate().toInstant().atZone(ZoneId.systemDefault()).getYear() == 
+						wrapperRequest.getEndDate().toInstant().atZone(ZoneId.systemDefault()).getYear()) {
+					avg = (registerByDistrictRepository.getAvgConsumption(
+							wrapperRequest.getDistrict(), 
+							wrapperRequest.getStartDate().toInstant().atZone(ZoneId.systemDefault()).getYear(),
+							wrapperRequest.getStartDate(), 
+							wrapperRequest.getEndDate()
+							)
+						);
+				}else {
+					//calcolo a cavallo tra piu anni
+					avg = (
+							straddlingYearsForAvg(wrapperRequest.getStartDate(),wrapperRequest.getEndDate(),wrapperRequest.getDistrict() 
+									)
+							);
+					
+				}
+		
+	return avg;
 	}
 	
 }

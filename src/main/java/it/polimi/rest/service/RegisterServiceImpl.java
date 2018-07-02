@@ -34,6 +34,9 @@ public class RegisterServiceImpl implements RegisterService{
 	@Autowired
 	BaselineService baselineService;
 	
+	@Autowired
+	RegisterByDistrictService registerByDistrict;
+	
 	@Override
 	public String hello() {
 		return "Hello Pietro!";
@@ -65,9 +68,6 @@ public class RegisterServiceImpl implements RegisterService{
 		//variables for year
 		LocalDate yearStartDate = wrapperRequest.getStartDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().with(TemporalAdjusters.firstDayOfYear());
 		LocalDate yearEndDate = wrapperRequest.getEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().with(TemporalAdjusters.firstDayOfYear());
-		Date lastYearBeginning =  Date.from(yearStartDate.minusYears(1).atStartOfDay(ZoneId.systemDefault()).toInstant());		
-		Date lastYearEnding =  Date.from(yearStartDate.minusYears(1).with(TemporalAdjusters.lastDayOfYear()).atTime(LocalTime.MAX).atZone(ZoneId.systemDefault()).toInstant());
-		
 		//variables for months
 		LocalDate firstDayOfStartDate = wrapperRequest.getStartDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().with ( ChronoField.DAY_OF_MONTH , 1 );
 		LocalDate firstDayOfEndDate = wrapperRequest.getEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().with ( ChronoField.DAY_OF_MONTH , 1 );

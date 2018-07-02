@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import it.polimi.rest.domain.Baseline;
 import it.polimi.rest.domain.BuildingSmartMeter;
 import it.polimi.rest.domain.request.Wrapper;
+import it.polimi.rest.exception.ResourceNotFoundException;
 import it.polimi.rest.repository.BaselineRepository;
 
 @Service
@@ -25,6 +26,9 @@ public class BaselineServiceImpl implements BaselineService {
 
 	@Autowired 
 	BuildingSmartMeterService buildingSmartMeterService;
+	
+	@Autowired
+	RegisterByDistrictService registerByDistrictService;
 	
 	@Override
 	public Double getMyLastYearBaseline(Wrapper wrapperRequest) {
@@ -56,13 +60,17 @@ public class BaselineServiceImpl implements BaselineService {
 	}
 
 	@Override
-	public Double getDistrictBaseline(Wrapper wrapperRequest) {
+	public Double getDistrictBaseline(Wrapper wrapperRequest) throws ResourceNotFoundException {
 		
 		BuildingSmartMeter bsm = buildingSmartMeterService.getBuildingSmartMeterBySmartMeterId(wrapperRequest.getMeteringPointName());
-		Integer myDistrict = bsm.getDistrictOid();
-		List<BuildingSmartMeter> myNeighborhood = buildingSmartMeterService.getBuildingSmartMeterByDistrictOid(myDistrict);
+		if (bsm == null || bsm.getDistrictOid() == null)
+			throw new ResourceNotFoundException("district");
+		else {
+			wrapperRequest.setDistrict(bsm.getDistrictOid().toString());
+			//nearest integer
+			return (double) Math.round(registerByDistrictService.getAvgNeighborhoodConsumption(wrapperRequest) * ORDER_MAGNITUDE);
+		}
 		
-		return null;
 	}
 }
 

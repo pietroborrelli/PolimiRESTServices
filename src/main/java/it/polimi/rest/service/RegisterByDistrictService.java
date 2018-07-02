@@ -7,4 +7,5 @@ import it.polimi.rest.exception.ResourceNotFoundException;
 
 public interface RegisterByDistrictService {
 	public SummaryConsumption getSummaryConsumptionNoDataRestriction(Wrapper wrapperRequest) throws ResourceNotFoundException;
+	public Double getAvgNeighborhoodConsumption(Wrapper wrapperRequest) throws ResourceNotFoundException;
 }
