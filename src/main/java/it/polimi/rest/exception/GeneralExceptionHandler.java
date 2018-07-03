@@ -26,4 +26,12 @@ class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
 
 		return handleExceptionInternal(ex, ex.getCustomMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
 	}
+	
+
+	@ExceptionHandler({ EmptyResultSetException.class })
+	@ResponseBody
+	protected ResponseEntity<Object> handleNotFound(EmptyResultSetException ex, WebRequest request) {
+
+		return handleExceptionInternal(ex, ex.getCustomMessage(), new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+	}
 }
