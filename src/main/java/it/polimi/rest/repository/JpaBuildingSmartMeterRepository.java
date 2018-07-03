@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 
@@ -24,11 +25,15 @@ public class JpaBuildingSmartMeterRepository implements BuildingSmartMeterReposi
 
 	@Override
 	public List<BuildingSmartMeter> findBuildingSmartMeterByDistrictOid(Integer districtOid) {
-		List<BuildingSmartMeter> resultList = em.createQuery(
-			    "SELECT bsm FROM BuildingSmartMeter bsm WHERE bsm.districtOid = :districtOid")
-			    .setParameter("districtOid", districtOid)	    
-			    .getResultList();
-		return resultList;	
+		TypedQuery<BuildingSmartMeter> query = em.createQuery("SELECT bsm FROM BuildingSmartMeter bsm WHERE bsm.districtOid = :districtOid",BuildingSmartMeter.class);
+		query.setParameter("districtOid", districtOid);
+		return query.getResultList();	
 
+	}
+
+	@Override
+	public List<BuildingSmartMeter> findDistinctBuildingSmartMeterOrderBySmartMeterId() {
+		TypedQuery<BuildingSmartMeter> query = em.createQuery("SELECT distinct bsm FROM BuildingSmartMeter bsm ",BuildingSmartMeter.class);
+		return query.getResultList();
 	}
 }

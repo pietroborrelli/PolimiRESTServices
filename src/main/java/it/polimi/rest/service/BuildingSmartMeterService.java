@@ -7,4 +7,5 @@ import it.polimi.rest.domain.BuildingSmartMeter;
 public interface BuildingSmartMeterService {
 	public BuildingSmartMeter getBuildingSmartMeterBySmartMeterId(String smartMeterId);
 	public List <BuildingSmartMeter> getBuildingSmartMeterByDistrictOid(Integer districtOid);
+	public List<String> getSmartMeterList();
 }

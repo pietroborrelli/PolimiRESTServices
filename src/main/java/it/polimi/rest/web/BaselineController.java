@@ -1,6 +1,5 @@
 package it.polimi.rest.web;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -9,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import it.polimi.rest.domain.Register;
 import it.polimi.rest.domain.request.Wrapper;
 import it.polimi.rest.exception.InvalidDateException;
 import it.polimi.rest.exception.ResourceNotFoundException;

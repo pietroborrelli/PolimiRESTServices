@@ -1,5 +1,6 @@
 package it.polimi.rest.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,14 @@ public class BuildingSmartMeterServiceImpl implements BuildingSmartMeterService{
 	@Override
 	public List<BuildingSmartMeter> getBuildingSmartMeterByDistrictOid(Integer districtOid) {
 		return buildingSmartMeterRepository.findBuildingSmartMeterByDistrictOid(districtOid);
+	}
+
+	@Override
+	public List<String> getSmartMeterList() {
+		List<String> smartMeterList = new ArrayList<String>();
+		for (BuildingSmartMeter bsm : buildingSmartMeterRepository.findDistinctBuildingSmartMeterOrderBySmartMeterId())
+			smartMeterList.add(bsm.getSmartMeterId());
+		return smartMeterList;
 	}
 
 }

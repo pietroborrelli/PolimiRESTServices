@@ -12,7 +12,6 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import it.polimi.rest.domain.RegisterByDistrict;
 import it.polimi.rest.domain.request.Wrapper;
 import it.polimi.rest.domain.response.SummaryConsumption;
 import it.polimi.rest.exception.ResourceNotFoundException;
